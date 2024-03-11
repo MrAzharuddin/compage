@@ -1,7 +1,7 @@
 package models
 
 type Data struct {
-	Code     string `json:"code"`
+	Code string `json:"code"`
 }
 
 type DocGenData struct {

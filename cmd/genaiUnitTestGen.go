@@ -80,8 +80,8 @@ func validateFlags() error {
 }
 
 func FetchUnitTestFromServer() error {
-	var excludedExtensionsUnitTests = []string{".devcontainer", ".md", "LICENSE", "Dockerfile", "config", ".yaml", "yml", "kubernetes", ".json", ".csproj", ".gitignore", "Infrastructure", "Core", ".sln", "Program.cs", "services", ".sh", ".mod", ".sum", ".db", "useful-commands","models", "clients","services", "Application","kubernetes", "Tests", "Infrastructure",".toml", "bin", ".dll"}
-	var excludedExtensionsDocs = []string{".toml", ".md", "LICENSE", ".github", ".json", "Properties", ".csproj", ".sln" }
+	var excludedExtensionsUnitTests = []string{".devcontainer", ".md", "LICENSE", "Dockerfile", "config", ".yaml", "yml", "kubernetes", ".json", ".csproj", ".gitignore", "Infrastructure", "Core", ".sln", "Program.cs", "services", ".sh", ".mod", ".sum", ".db", "useful-commands", "models", "clients", "services", "Application", "kubernetes", "Tests", "Infrastructure", ".toml", "bin", ".dll"}
+	var excludedExtensionsDocs = []string{".toml", ".md", "LICENSE", ".github", ".json", "Properties", ".csproj", ".sln"}
 
 	result, err := collectFolderAndFileData(compageProjectName, true, excludedExtensionsUnitTests)
 	if err != nil {
@@ -353,7 +353,6 @@ func collectFolderData(rootFolder string, shouldExcluded bool, excludedDirs []st
 }
 
 // File reader code ends here
-
 func init() {
 	// add viper configuration
 	v, err := AddGPTConfigForViper()
