@@ -3,29 +3,26 @@ package cmd
 import (
 	"os"
 
+	genInit "github.com/intelops/compage/cmd/genai/init"
+	"github.com/intelops/compage/cmd/internal/utils"
 	testcmd "github.com/intelops/compage/cmd/testCmd"
-	log "github.com/sirupsen/logrus"
 )
 
 func init() {
 	// add viper configuration
-	v, err := AddGPTConfigForViper()
+	vprConfig, err := utils.LoadViper()
+	logger := utils.NewLog()
+	log := logger.GetLogger()
 	if err != nil {
 		log.Error(err)
-	}
-	err = v.ReadInConfig()
-	if err != nil {
-		log.Error(err)
-	}
-
-	accessToken := v.GetString("OPENAI_ACCESS_TOKEN")
-	if accessToken == "" {
-		log.Error("OPENAI_ACCESS_TOKEN is not set")
 		os.Exit(1)
 	}
 
 	// create a new testCmd instance
 	testcmd := testcmd.NewTestCmd(accessToken)
+	genaiInit := genInit.NewGenAIStart(log, vprConfig)
 
 	rootCmd.AddCommand(testcmd.Execute())
+	rootCmd.AddCommand(genaiInit.Execute())
+
 }

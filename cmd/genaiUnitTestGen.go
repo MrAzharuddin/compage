@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/intelops/compage/cmd/internal/utils"
 	"github.com/intelops/compage/cmd/models"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
@@ -21,6 +22,7 @@ var (
 	client             *http.Client
 	codeLanguage       string
 	compageProjectName string
+	llmBaseURL = "http://localhost:8000/api"
 )
 
 var gptUnitTestCmd = &cobra.Command{
@@ -355,10 +357,11 @@ func collectFolderData(rootFolder string, shouldExcluded bool, excludedDirs []st
 // File reader code ends here
 func init() {
 	// add viper configuration
-	v, err := AddGPTConfigForViper()
+	vpr, err := utils.LoadViper()
 	if err != nil {
 		log.Error(err)
 	}
+	v := vpr.GetConfig().Viper
 	err = v.ReadInConfig()
 	if err != nil {
 		log.Error(err)
