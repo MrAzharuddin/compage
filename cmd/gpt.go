@@ -6,7 +6,6 @@ import (
 	genInit "github.com/intelops/compage/cmd/genai/init"
 	unitTest "github.com/intelops/compage/cmd/genai/unit-test"
 	"github.com/intelops/compage/cmd/internal/utils"
-	testcmd "github.com/intelops/compage/cmd/testCmd"
 )
 
 func init() {
@@ -20,11 +19,10 @@ func init() {
 	}
 
 	// create a new testCmd instance
-	testcmd := testcmd.NewTestCmd(accessToken)
 	genaiInit := genInit.NewGenAIStart(log, vprConfig)
 	genaiUnitTest := unitTest.NewUnitTestCmd(log, vprConfig)
 
-	rootCmd.AddCommand(testcmd.Execute())
+	// Add SubCommands for gpt
 	rootCmd.AddCommand(genaiInit.Execute())
 	rootCmd.AddCommand(genaiUnitTest.Execute())
 
