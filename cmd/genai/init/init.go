@@ -40,11 +40,11 @@ func (g *GenAIStart) genAIInitCmdRun(cmd *cobra.Command, args []string) {
 	configs, err := g.viperConfig.Unmarshal()
 	if err != nil {
 		g.logger.Error("Config unmarshal failed")
-
+		return
 	}
 	if !configs.Validate() {
 		g.logger.Error("Config validation failed")
-
+		return
 	}
 
 	// validate the `OPENAI_KEY` from the system environment
@@ -53,7 +53,7 @@ func (g *GenAIStart) genAIInitCmdRun(cmd *cobra.Command, args []string) {
 	err = g.ValidateOpenAIKey()
 	if err != nil {
 		g.logger.Error("OpenAI key validation failed")
-
+		return
 	}
 
 	// validate the `username` from the userName flag
@@ -62,7 +62,7 @@ func (g *GenAIStart) genAIInitCmdRun(cmd *cobra.Command, args []string) {
 	err = g.ValidateUserName(cmd)
 	if err != nil {
 		g.logger.Error("User name validation failed", err)
-
+		return
 	}
 
 	// validate the tokens
@@ -70,7 +70,8 @@ func (g *GenAIStart) genAIInitCmdRun(cmd *cobra.Command, args []string) {
 	// else, continue
 	err = g.CheckOpenAITokens()
 	if err != nil {
-		g.logger.Error("Token validation failed")
+		g.logger.Error("Token validation failed", err)
+		return
 	}
 
 	g.logger.Info("Initialization successful")
