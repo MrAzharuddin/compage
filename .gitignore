@@ -13,6 +13,7 @@ openapitools.json
 /deploy/build/
 compage
 /config.yaml
+/prompts.yaml
 
 dist/
 /cosign.key

@@ -11,6 +11,6 @@ type APIResponse struct {
 }
 
 type UnitTestRequest struct {
-	Prompt   string `json:"prompt"`
-	Language string `json:"language"`
+	Prompt       string `json:"prompt"`
+	OpenAIAPIKey string `json:"openai_api_key"`
 }

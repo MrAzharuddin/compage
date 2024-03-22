@@ -17,24 +17,16 @@ func LoadViper() (*ViperConfig, error) {
 	if err != nil {
 		return nil, err
 	}
-	// check if config file exists
-	if _, err := os.Stat(userHomeDir + "/.compage/gpt.env"); os.IsNotExist(err) {
-		// create config file
-		err = os.MkdirAll(userHomeDir+"/.compage", 0755)
-		if err != nil {
-			return nil, err
-		}
-		f, err := os.Create(userHomeDir + "/.compage/gpt.env")
-		if err != nil {
-			return nil, err
-		}
-		defer f.Close()
+
+	configDir := userHomeDir + "/.compage"
+	if _, err := os.Stat(configDir); os.IsNotExist(err) {
+		return nil, err
 	}
 
 	vpr := viper.New()
 	vpr.AddConfigPath(userHomeDir + "/.compage")
-	vpr.SetConfigType("env")
-	vpr.SetConfigName("gpt.env")
+	vpr.SetConfigType("yaml")
+	vpr.SetConfigName("prompts.yaml")
 	vpr.AutomaticEnv()
 	if err := vpr.ReadInConfig(); err != nil {
 		return nil, err

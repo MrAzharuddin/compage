@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 
 	"github.com/intelops/compage/cmd/internal/models"
 	"github.com/intelops/compage/cmd/internal/utils"
@@ -19,17 +20,10 @@ func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse,
 		return nil, errors.New("code is empty")
 	}
 
-	// get the access token from the config
-	config, err := u.viperConfig.Unmarshal()
-	if err != nil {
-		return nil, err
-	}
-	// store the access token from the config
-	accessToken := config.OpenAIAccessToken
-
-	// validate the access token
-	if accessToken == "" {
-		return nil, errors.New("access token is empty")
+	// Fetch the `OPENAI_KEY` from the system environment
+	openaiAPIKey, ok := os.LookupEnv("OPENAI_KEY")
+	if !ok {
+		return nil, errors.New("OPENAI_KEY is not set in the environment, please set it and try validating with `compage genaiInit` command to verify the API KEY")
 	}
 
 	// create the prompt for the OpenAI API
@@ -38,7 +32,7 @@ func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse,
 	// create the request body
 	body, err := json.Marshal(models.UnitTestRequest{
 		Prompt:   prompt,
-		Language: "go",
+		OpenAIAPIKey: openaiAPIKey,
 	})
 
 	if err != nil {
@@ -46,14 +40,13 @@ func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse,
 	}
 
 	// create the request
-	request, err := http.NewRequest("POST", utils.BACKEND_LLM_URL+"/code_generate", bytes.NewBuffer(body))
+	request, err := http.NewRequest("POST", utils.BACKEND_LLM_URL+"/unit_test_generate", bytes.NewBuffer(body))
 	if err != nil {
 		return nil, err
 	}
 
 	// add headers to the request
 	request.Header.Set("Content-Type", "application/json")
-	request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", accessToken))
 	request.Header.Set("Accept", "application/json")
 
 	response, err := client.Do(request)

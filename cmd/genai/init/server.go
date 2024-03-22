@@ -12,14 +12,13 @@ import (
 )
 
 func (ga *GenAIStart) CheckOpenAITokens() error {
-	if OPENAI_KEY == "" || USERNAME == "" {
-		return errors.New("OPENAI_KEY or USERNAME is not set")
+	if OPENAI_KEY == "" {
+		return errors.New("OPENAI_KEY is not set")
 	}
 
 	// create a request body to send to the server
 	tokenbody := models.TokenSchema{
-		Username: USERNAME,
-		OpenAIKey: OPENAI_KEY,
+		OpenAIApiKey: OPENAI_KEY,
 	}
 
 	// convert the request body to JSON
@@ -28,7 +27,7 @@ func (ga *GenAIStart) CheckOpenAITokens() error {
 		return err
 	}
 
-	response, err := http.Post(utils.BACKEND_LLM_URL+"/create-token", "application/json", bytes.NewBuffer(tokenbodyJSON))
+	response, err := http.Post(utils.BACKEND_LLM_URL+"/validate_openai", "application/json", bytes.NewBuffer(tokenbodyJSON))
 	if err != nil {
 		return err
 	}
@@ -49,19 +48,7 @@ func (ga *GenAIStart) CheckOpenAITokens() error {
 		return errors.New(string(body))
 	}
 
-	// if the status code is 200, return nil
-	var resdata models.TokenResponseSchema
-	err = json.Unmarshal(body, &resdata)
-	if err != nil {
-		return err
-	}
-
-	err = ga.viperConfig.WriteConfig("OPENAI_ACCESS_TOKEN", resdata.AccessToken )
-	if err != nil {
-		return err
-	}
-
-	ga.logger.Info("Tokens created successfully")
+	ga.logger.Info("📢 OpenAI API key validated successfully! Please explore our commands to get started. ⚡🚀")
 	
 	return nil
 }
