@@ -11,14 +11,14 @@ import (
 
 // UnitTestCmd is the struct for the genaiUnitTest command
 type UnitTestCmd struct {
-	logger      *logrus.Logger
+	logger *logrus.Logger
 }
 
 // NewUnitTestCmd returns a new instance of UnitTestCmd
 func NewUnitTestCmd(logger *logrus.Logger) *UnitTestCmd {
-	// Create a new UnitTestCmd struct with the given logger and viperConfig
+	// Create a new UnitTestCmd struct with the given logger
 	return &UnitTestCmd{
-		logger:      logger,
+		logger: logger,
 	}
 }
 
@@ -27,8 +27,8 @@ func (u *UnitTestCmd) Execute() *cobra.Command {
 	// Create a new cobra command for the genaiUnitTest command
 	unitTestCmd := &cobra.Command{
 		Use:   "genaiUnitTest",
-		Short: "Generate AI Unit Test", // Generate AI Unit Test
-		Long:  `Generate AI Unit Test`, // Generate AI Unit Test
+		Short: "Generate Unit Test using compage llm",                                                                                                                                                                             // Generate AI Unit Test
+		Long:  `Generate Unit Test using compage llm backend server which handles its validation and authentication with our server. It will generate unit tests for your code and stores them in the current working directory.`, // Generate AI Unit Test
 		PreRun: func(_ *cobra.Command, _ []string) {
 			// Warn the user that the command is in alpha version and may have some bugs
 			yellow := "\033[33m"
