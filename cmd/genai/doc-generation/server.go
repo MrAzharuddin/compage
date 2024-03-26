@@ -27,12 +27,20 @@ func (dg *DocGenerationCmd) docGenerationServer(folderStructure string) (*models
 		return nil, errors.New("OPENAI_KEY is not set in the environment, please set it and try validating with `compage genaiInit` command to verify the API KEY")
 	}
 
+	// fetch Prompt from json file
+	pmt, err := dg.fetchPromptBasedOnLanguage("prompts.json", language)
+	if err != nil {
+		return nil, err
+	}
+
+	dg.logger.Info("Prompt fetched from json file:", pmt)
+
 	// create the prompt for the OpenAI API
 	prompt := fmt.Sprintf("Generate documentation for the following folder structure and also provide code flow diagram in the mermaid format. The entire documentation should be in markdown format. \n\nFolder Structure : \n%s", folderStructure)
 
 	// create the request body
 	body, err := json.Marshal(models.UnitTestRequest{
-		Prompt: prompt,
+		Prompt:       prompt,
 		OpenAIAPIKey: openaiAPIKey,
 	})
 
@@ -75,4 +83,23 @@ func (dg *DocGenerationCmd) docGenerationServer(folderStructure string) (*models
 		return nil, err
 	}
 	return &apiResponse, nil
+}
+
+func (dg *DocGenerationCmd) fetchPromptBasedOnLanguage(filepath string, language string) (string, error) {
+	switch language {
+	case "go":
+		prompt, err := models.ReadGoConfigJSONFile(filepath, language)
+		if err != nil {
+			return "", err
+		}
+		return prompt.Documentation.GoDocPrompt, nil
+	case "dotnet":
+		prompt, err := models.ReadDotnetConfigJSONFile(filepath, language)
+		if err != nil {
+			return "", err
+		}
+		return prompt.Documentation.DotnetDocPrompt, nil
+	default:
+		return "", fmt.Errorf("invalid language: %s", language)
+	}
 }

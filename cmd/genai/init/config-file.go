@@ -8,7 +8,7 @@ import (
 )
 
 func (g *GenAIStart) generateConfigFile() error {
-	promptFilePath := "prompts.yaml"
+	promptFilePath := "prompts.json"
 	// prompt file does not exist, create it
 	_, err := os.Create(promptFilePath)
 	if err != nil {
@@ -27,7 +27,7 @@ func (g *GenAIStart) generateConfigFile() error {
 	}
 
 	if language == "go" {
-		promptContentData, err := PromptContentTmpl.ReadFile("prompts.yaml.tmpl")
+		promptContentData, err := PromptContentTmpl.ReadFile("prompts.json.tmpl")
 		if err != nil {
 			g.logger.Errorf("error while reading the prompt config file %s", err)
 			return err
@@ -47,8 +47,10 @@ func (g *GenAIStart) generateConfigFile() error {
 		data["Language"] = language
 		if language == "go" {
 			data["GoPrompt"] = goPrompt
+			data["GoDocPrompt"] = goDocPrompt
 		} else if language == "dotnet" {
-			data["DotnetPrompt"] = dotnetPrompt
+			data["DotNetPrompt"] = dotnetPrompt
+			data["DotNetDocPrompt"] = dotnetDocPrompt
 		}
 
 		err = executor.Execute(filePaths, data)
@@ -61,6 +63,5 @@ func (g *GenAIStart) generateConfigFile() error {
 
 	}
 
-	// g.logger.Infof("Prompt file created at %s", promptFilePath)
 	return nil
 }

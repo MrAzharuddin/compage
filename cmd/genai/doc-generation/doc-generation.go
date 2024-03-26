@@ -10,6 +10,7 @@ import (
 
 var (
 	excludedDirs []string
+	language = "go"
 )
 
 // DocGenerationCmd is the struct for the genaiDocGeneration command
@@ -40,6 +41,7 @@ func (dg *DocGenerationCmd) Execute() *cobra.Command {
 	}
 
 	docGenerationCmd.Flags().StringSliceVar(&excludedDirs, "excludedDirs", excludedDirs, "excludedDirs")
+	docGenerationCmd.Flags().StringVar(&language, "language", language, "language")
 
 	return docGenerationCmd
 }

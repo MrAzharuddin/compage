@@ -7,13 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	goPrompt = "Write a unit test case for the following Golang programming language code using the in-built testing package in golang:%s. Make sure the unit test case you are generating is providing the imports on the top and also keep that whole test case in between three backticks(```) at the beginning and end of the unit test case."
-	dotnetPrompt = ""
-	language = "go"
-)
-
-//go:embed prompts.yaml.tmpl
+//go:embed prompts.json.tmpl
 var PromptContentTmpl embed.FS
 
 type GenAIStart struct {
@@ -43,7 +37,9 @@ func (g *GenAIStart) Execute() *cobra.Command {
 	// Add flags to the command
 	// goPrompt, dotnetPrompt, language are the default flags values
 	genAIInitCmd.Flags().StringVar(&goPrompt, "goPrompt", goPrompt, "goPrompt")
+	genAIInitCmd.Flags().StringVar(&goDocPrompt, "goDocPrompt", goDocPrompt, "goDocPrompt")
 	genAIInitCmd.Flags().StringVar(&dotnetPrompt, "dotnetPrompt", dotnetPrompt, "dotnetPrompt")
+	genAIInitCmd.Flags().StringVar(&dotnetDocPrompt, "dotnetDocPrompt", dotnetDocPrompt, "dotnetDocPrompt")
 	genAIInitCmd.Flags().StringVar(&language, "language", language, "language")
 
 	return genAIInitCmd
