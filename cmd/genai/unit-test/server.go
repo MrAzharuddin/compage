@@ -31,7 +31,7 @@ func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse,
 
 	// create the request body
 	body, err := json.Marshal(models.UnitTestRequest{
-		Prompt:   prompt,
+		Prompt:       prompt,
 		OpenAIAPIKey: openaiAPIKey,
 	})
 

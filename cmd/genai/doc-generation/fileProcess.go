@@ -13,7 +13,6 @@ func (dg *DocGenerationCmd) fetchFoldersData(root string) ([]string, error) {
 	excludedDirs = []string{
 		"Dockerfile",
 		"README.md",
-
 	}
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -28,7 +27,7 @@ func (dg *DocGenerationCmd) fetchFoldersData(root string) ([]string, error) {
 		if dg.shouldExclude(path, excludedDirs) {
 			result = append(result, path)
 		}
-		
+
 		return nil
 	})
 

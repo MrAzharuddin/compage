@@ -9,7 +9,7 @@ type Log struct {
 func NewLog() Log {
 	log := logrus.New()
 	log.SetFormatter(&logrus.TextFormatter{
-		FullTimestamp: true,
+		FullTimestamp:   true,
 		TimestampFormat: "2006-01-02 15:04:05",
 	})
 
@@ -20,4 +20,4 @@ func NewLog() Log {
 
 func (l Log) GetLogger() *logrus.Logger {
 	return l.log
-}	
+}

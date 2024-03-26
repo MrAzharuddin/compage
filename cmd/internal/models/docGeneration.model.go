@@ -1,6 +1,5 @@
 package models
 
-
 type DocGenData struct {
 	Docs string `json:"docs"`
 }

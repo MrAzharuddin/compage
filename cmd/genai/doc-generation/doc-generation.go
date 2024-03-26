@@ -10,7 +10,7 @@ import (
 
 var (
 	excludedDirs []string
-	language = "go"
+	language     = "go"
 )
 
 // DocGenerationCmd is the struct for the genaiDocGeneration command

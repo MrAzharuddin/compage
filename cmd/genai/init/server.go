@@ -49,6 +49,6 @@ func (ga *GenAIStart) CheckOpenAITokens() error {
 	}
 
 	ga.logger.Info("📢 OpenAI API key validated successfully! Please explore our commands to get started. ⚡🚀")
-	
+
 	return nil
 }

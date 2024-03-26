@@ -11,12 +11,12 @@ import (
 var PromptContentTmpl embed.FS
 
 type GenAIStart struct {
-	logger      *logrus.Logger
+	logger *logrus.Logger
 }
 
 func NewGenAIStart(logger *logrus.Logger) *GenAIStart {
 	return &GenAIStart{
-		logger:      logger,
+		logger: logger,
 	}
 }
 

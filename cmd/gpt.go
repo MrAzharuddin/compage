@@ -20,5 +20,5 @@ func init() {
 	rootCmd.AddCommand(genaiInit.Execute())
 	rootCmd.AddCommand(genaiUnitTest.Execute())
 	rootCmd.AddCommand(genaiDocGeneration.Execute())
-	
+
 }
