@@ -4,13 +4,14 @@ import (
 	"os"
 	"strings"
 
+	"github.com/intelops/compage/cmd/internal/utils"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
 var (
 	excludedDirs []string
-	language     = "go"
+	language     = utils.AvailableLanguages.Go
 )
 
 // DocGenerationCmd is the struct for the genaiDocGeneration command

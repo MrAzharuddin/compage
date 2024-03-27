@@ -37,9 +37,8 @@ func (g *GenAIStart) Execute() *cobra.Command {
 	// Add flags to the command
 	// goPrompt, dotnetPrompt, language are the default flags values
 	genAIInitCmd.Flags().StringVar(&goPrompt, "goPrompt", goPrompt, "goPrompt")
-	genAIInitCmd.Flags().StringVar(&goDocPrompt, "goDocPrompt", goDocPrompt, "goDocPrompt")
+	genAIInitCmd.Flags().StringVar(&docPrompt, "docPrompt", docPrompt, "docPrompt")
 	genAIInitCmd.Flags().StringVar(&dotnetPrompt, "dotnetPrompt", dotnetPrompt, "dotnetPrompt")
-	genAIInitCmd.Flags().StringVar(&dotnetDocPrompt, "dotnetDocPrompt", dotnetDocPrompt, "dotnetDocPrompt")
 	genAIInitCmd.Flags().StringVar(&language, "language", language, "language")
 
 	return genAIInitCmd

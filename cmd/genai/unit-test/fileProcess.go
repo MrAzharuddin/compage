@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/intelops/compage/cmd/internal/utils"
 )
 
 func (u *UnitTestCmd) fileProcess(path string) (map[string][]string, error) {
@@ -97,13 +99,57 @@ func (u *UnitTestCmd) processCodeBlock(fileName string, codeSections string) err
 	// Process the code sections
 	code, err := u.processCodeString(codeSections)
 	if err != nil {
+		u.logger.Error("Error processing code sections:", err)
 		return err
 	}
 
-	// Create a new file with the same name as the original file and _test.go file
-	testFileName := fileName[0:len(fileName)-3] + "_test.go"
-	testFile, err := os.Create(testFileName)
+	// Save the test file
+	err = u.processAndSaveTestFile(fileName, code)
 	if err != nil {
+		u.logger.Error("Error saving test file:", err)
+		return err
+	}
+
+	return nil
+}
+
+// Based on language, create a test file in `genai_unit_test` folder, create this folder if it doesn't exist.
+func (u *UnitTestCmd) processAndSaveTestFile(fileName string, code []string) error {
+	if config == nil {
+		return fmt.Errorf("config is nil")
+	}
+	if config.Language == "" {
+		return fmt.Errorf("language is empty")
+	}
+	if len(fileName) == 0 {
+		return fmt.Errorf("fileName is empty")
+	}
+	if code == nil {
+		return fmt.Errorf("code is nil")
+	}
+
+	var testfileName string
+	if config.Language == utils.AvailableLanguages.Go {
+		testfileName = fileName[0:len(fileName)-3] + "_test.go"
+	} else if config.Language == utils.AvailableLanguages.DotNet {
+		testfileName = fileName[0:len(fileName)-3] + "Test.cs"
+	} else {
+		return fmt.Errorf("language not supported")
+	}
+
+	// Create the `genai_unit_test` folder if it doesn't exist
+	if _, err := os.Stat(utils.UnitTestDir); os.IsNotExist(err) {
+		err := os.Mkdir(utils.UnitTestDir, 0755)
+		if err != nil {
+			u.logger.Error("Error creating test folder:", err)
+			return err
+		}
+	}
+
+	// Create the test file
+	testFile, err := os.Create(utils.UnitTestDir + "/" + testfileName)
+	if err != nil {
+		u.logger.Error("Error creating test file:", err)
 		return err
 	}
 	defer testFile.Close()

@@ -45,13 +45,9 @@ func (g *GenAIStart) generateConfigFile() error {
 		filePaths = append(filePaths, &promptFilePath)
 		data := make(map[string]interface{})
 		data["Language"] = language
-		if language == "go" {
-			data["GoPrompt"] = goPrompt
-			data["GoDocPrompt"] = goDocPrompt
-		} else if language == "dotnet" {
-			data["DotNetPrompt"] = dotnetPrompt
-			data["DotNetDocPrompt"] = dotnetDocPrompt
-		}
+		data["GoPrompt"] = goPrompt
+		data["DotNetPrompt"] = dotnetPrompt
+		data["DocPrompt"] = docPrompt
 
 		err = executor.Execute(filePaths, data)
 		if err != nil {

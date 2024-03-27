@@ -3,7 +3,6 @@ package unitTest
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,20 +13,37 @@ import (
 )
 
 func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse, error) {
-	client := &http.Client{}
 	// validate the code string
 	if code == "" {
-		return nil, errors.New("code is empty")
+		return nil, fmt.Errorf("code is empty")
+	}
+
+	// validate the language string
+	if config.Language == "" {
+		return nil, fmt.Errorf("language is empty")
 	}
 
 	// Fetch the `OPENAI_KEY` from the system environment
 	openaiAPIKey, ok := os.LookupEnv("OPENAI_KEY")
 	if !ok {
-		return nil, errors.New("OPENAI_KEY is not set in the environment, please set it and try validating with `compage genaiInit` command to verify the API KEY")
+		return nil, fmt.Errorf("OPENAI_KEY is not set in the environment, please set it and try validating with `compage genaiInit` command to verify the API KEY")
 	}
 
 	// create the prompt for the OpenAI API
-	prompt := fmt.Sprintf("Write a unit test case for the following Golang programming language code using the in-built testing package in golang:\n%s. Make sure the unit test case you are generating is providing the imports on the top and also keep that whole test case in between three backticks(```) at the beginning and end of the unit test case.", code)
+	prompt, err := u.fetchPromptBasedOnLanguage()
+	if err != nil {
+		u.logger.Errorf("error while fetching prompt: %v", err)
+		return nil, err
+	}
+	
+	// validate the prompt string
+	if prompt == "" {
+		return nil, fmt.Errorf("prompt is empty")
+	}
+
+	// format the prompt
+	prompt = fmt.Sprintf(prompt, code)
+
 
 	// create the request body
 	body, err := json.Marshal(models.UnitTestRequest{
@@ -49,6 +65,10 @@ func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse,
 	request.Header.Set("Content-Type", "application/json")
 	request.Header.Set("Accept", "application/json")
 
+	// create the client
+	client := &http.Client{}
+
+	// send the request
 	response, err := client.Do(request)
 	if err != nil {
 		return nil, err
@@ -69,4 +89,20 @@ func (u *UnitTestCmd) FetchUnitTestFromOpenAI(code string) (*models.APIResponse,
 		return nil, err
 	}
 	return &apiResponse, nil
+}
+
+
+func (u *UnitTestCmd) fetchPromptBasedOnLanguage() (string, error) {
+	if config.Language == "" {
+		return "", fmt.Errorf("language is empty")
+	}
+
+	switch config.Language {
+		case utils.AvailableLanguages.Go:
+			return config.UnitTest.GoPrompt, nil
+		case utils.AvailableLanguages.DotNet:
+			return config.UnitTest.DotNetPrompt, nil
+	}
+
+	return "", fmt.Errorf("language not supported")
 }

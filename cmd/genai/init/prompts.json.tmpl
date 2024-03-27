@@ -1,18 +1,10 @@
-{{ if eq .Language "go" }}
 {
+  "language": "{{ .Language }}",
   "unitTest": {
-    "goPrompt": "{{ .GoPrompt }}"
+    "goPrompt": "{{ .GoPrompt }}",
+    "dotnetPrompt" : "{{ .DotNetPrompt }}"
   },
   "documentation": {
-    "goDocPrompt": "{{ .GoDocPrompt }}"
+    "docPrompt": "{{ .DocPrompt }}"
   }
 }
-{{ else if eq .Language "dotnet" }}
-{
-  "unitTest": {
-    "dotnetPrompt": "{{ .DotNetPrompt }}"
-  },
-  "documentation": {
-    "dotnetDocPrompt": "{{ .DotNetDocPrompt }}"
-  }
-{{ end }}
