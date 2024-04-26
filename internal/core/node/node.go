@@ -19,6 +19,12 @@ type Node struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 }
 
+type License struct {
+	Name string `yaml:"name,omitempty"`
+	URL  string `yaml:"url,omitempty"`
+	Path string `yaml:"path,omitempty"`
+}
+
 type RestServer struct {
 	Port      string      `json:"port"`
 	SQLDB     string      `json:"sqlDB"`
