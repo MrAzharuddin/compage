@@ -45,6 +45,7 @@ jobs:
           wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.6.0/openapi-generator-cli-6.6.0.jar -O $HOME/.openapi-generator/openapi-generator-cli.jar
           go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
           go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+          go install github.com/swaggo/swag/cmd/swag@latest
           export GOPATH=$HOME/go
           export GOBIN=$GOPATH/bin
           export PATH=$PATH:$GOPATH:$GOBIN:$HOME/ogc
