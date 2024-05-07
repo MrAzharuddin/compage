@@ -69,7 +69,7 @@ func TestRestServerGeneratorNoSql(t *testing.T) {
 		GitRepositoryName:   "first-rest-server-project-nosql",
 		ProjectName:         "first-rest-server-project-nosql",
 		ProjectJSON:         restServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-project-nosql"))
@@ -145,7 +145,7 @@ func TestRestServerGeneratorSqlMap(t *testing.T) {
 		GitRepositoryName:   "first-rest-server-project-map",
 		ProjectName:         "first-rest-server-project-map",
 		ProjectJSON:         restServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-project-map"))
@@ -225,7 +225,7 @@ func TestRestServerGeneratorSqlSQLite(t *testing.T) {
 		GitRepositoryName:   "first-rest-server-project-sqlite",
 		ProjectName:         "first-rest-server-project-sqlite",
 		ProjectJSON:         restServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-project-sqlite"))
@@ -301,7 +301,7 @@ func TestRestServerGeneratorSqlMySQL(t *testing.T) {
 		GitRepositoryName:   "first-rest-server-project-mysql",
 		ProjectName:         "first-rest-server-project-mysql",
 		ProjectJSON:         restServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-project-mysql"))
@@ -377,7 +377,7 @@ func TestRestServerGeneratorSqlSQLiteGORM(t *testing.T) {
 		GitRepositoryName:   "first-rest-server-project-sqlite-gorm",
 		ProjectName:         "first-rest-server-project-sqlite-gorm",
 		ProjectJSON:         restServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-project-sqlite-gorm"))
@@ -453,7 +453,7 @@ func TestRestServerGeneratorSqlMySQLGORM(t *testing.T) {
 		GitRepositoryName:   "first-rest-server-project-mysql-gorm",
 		ProjectName:         "first-rest-server-project-mysql-gorm",
 		ProjectJSON:         restServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-project-mysql-gorm"))
@@ -519,7 +519,7 @@ func TestRestServerWithOpenApiGenerator(t *testing.T) {
 				GitRepositoryName:   "first-project-github",
 				ProjectName:         "first-openapi-based-project-" + tt.language,
 				ProjectJSON:         replacedConfig,
-				CompageCoreVersion:  "v1.0.0",
+				CompageCoreVersion:  "v2.0.0",
 			}
 			defer func() {
 				_ = os.RemoveAll(utils.GetProjectDirectoryName("first-openapi-based-project-" + tt.language))
@@ -593,7 +593,7 @@ func TestGrpcServerGeneratorNoSql(t *testing.T) {
 		GitRepositoryName:   "first-grpc-server-project-nosql",
 		ProjectName:         "first-grpc-server-project-nosql",
 		ProjectJSON:         grpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-grpc-server-project-nosql"))
@@ -663,7 +663,7 @@ func TestGrpcServerGeneratorSqlMap(t *testing.T) {
 		GitRepositoryName:   "first-grpc-server-project-map",
 		ProjectName:         "first-grpc-server-project-map",
 		ProjectJSON:         grpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-grpc-server-project-map"))
@@ -737,7 +737,7 @@ func TestGrpcServerGeneratorSqlSQLite(t *testing.T) {
 		GitRepositoryName:   "first-grpc-server-project-sqlite",
 		ProjectName:         "first-grpc-server-project-sqlite",
 		ProjectJSON:         grpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-grpc-server-project-sqlite"))
@@ -807,7 +807,7 @@ func TestGrpcServerGeneratorSqlMySQL(t *testing.T) {
 		GitRepositoryName:   "first-grpc-server-project-mysql",
 		ProjectName:         "first-grpc-server-project-mysql",
 		ProjectJSON:         grpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-grpc-server-project-mysql"))
@@ -877,7 +877,7 @@ func TestGrpcServerGeneratorSqlSQLiteGORM(t *testing.T) {
 		GitRepositoryName:   "first-grpc-server-project-sqlite-gorm",
 		ProjectName:         "first-grpc-server-project-sqlite-gorm",
 		ProjectJSON:         grpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-grpc-server-project-sqlite-gorm"))
@@ -947,7 +947,7 @@ func TestGrpcServerGeneratorSqlMySQLGORM(t *testing.T) {
 		GitRepositoryName:   "first-grpc-server-project-mysql-gorm",
 		ProjectName:         "first-grpc-server-project-mysql-gorm",
 		ProjectJSON:         grpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-grpc-server-project-mysql-gorm"))
@@ -1122,7 +1122,7 @@ func TestRestServerClientsAndGrpcServerClientsCrossConfigGenerator(t *testing.T)
 		GitRepositoryName:   "first-rest-server-clients-and-grpc-server-clients-cross-config-project",
 		ProjectName:         "first-rest-server-clients-and-grpc-server-clients-cross-config-project",
 		ProjectJSON:         restGrpcServerClientsCrossConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-server-clients-and-grpc-server-clients-cross-config-project"))
@@ -1232,7 +1232,7 @@ func TestRestClientAndGrpcClientCrossConfigGenerator(t *testing.T) {
 		GitRepositoryName:   "first-rest-client-and-grpc-client-cross-config-project",
 		ProjectName:         "first-rest-client-and-grpc-client-cross-config-project",
 		ProjectJSON:         restGrpcClientCrossConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-client-and-grpc-client-cross-config-project"))
@@ -1308,7 +1308,7 @@ func TestRestAndGrpcServerGenerator(t *testing.T) {
 		GitRepositoryName:   "first-rest-and-grpc-server-project",
 		ProjectName:         "first-rest-and-grpc-server-project",
 		ProjectJSON:         restAndGrpcServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-rest-and-grpc-server-project"))
@@ -1366,7 +1366,7 @@ func TestWsServerGenerator(t *testing.T) {
 		GitRepositoryName:   "first-ws-server-project",
 		ProjectName:         "first-ws-server-project",
 		ProjectJSON:         wsServerConfigJSON,
-		CompageCoreVersion:  "v1.0.0",
+		CompageCoreVersion:  "v2.0.0",
 	}
 	defer func() {
 		_ = os.RemoveAll(utils.GetProjectDirectoryName("first-ws-server-project"))
