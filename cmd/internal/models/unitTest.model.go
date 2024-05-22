@@ -3,6 +3,12 @@ package models
 type Data struct {
 	Code string `json:"code"`
 }
+
+type FileStructure struct {
+	FileName string              `json:"fileName"`
+	Data     map[string][]string `json:"data"`
+}
+
 type APIResponse struct {
 	Status  string `json:"status"`
 	Code    int    `json:"code"`

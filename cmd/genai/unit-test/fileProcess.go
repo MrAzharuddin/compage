@@ -81,6 +81,7 @@ func (u *UnitTestCmd) processCodeString(content string) ([]string, error) {
 
 		endIndex := strings.Index(content[startIndex:], endDelimiter)
 		if endIndex == -1 {
+			u.logger.Error("Incomplete code block found")
 			return nil, errors.New("incomplete code block found")
 		}
 
@@ -130,24 +131,23 @@ func (u *UnitTestCmd) processAndSaveTestFile(fileName string, code []string) err
 
 	var testfileName string
 	if config.Language == utils.AvailableLanguages.Go {
+		u.logger.Info("fileName:", fileName)
 		testfileName = fileName[0:len(fileName)-3] + "_test.go"
 	} else if config.Language == utils.AvailableLanguages.DotNet {
+		u.logger.Info("fileName:", fileName)
 		testfileName = fileName[0:len(fileName)-3] + "Test.cs"
 	} else {
 		return fmt.Errorf("language not supported")
 	}
 
-	// Create the `genai_unit_test` folder if it doesn't exist
-	if _, err := os.Stat(utils.UnitTestDir); os.IsNotExist(err) {
-		err := os.Mkdir(utils.UnitTestDir, 0755)
-		if err != nil {
-			u.logger.Error("Error creating test folder:", err)
-			return err
-		}
+	fullPath := filepath.Join(utils.UnitTestDir, testfileName)
+	err = os.MkdirAll(filepath.Dir(fullPath), 0755) // Create the directory if it doesn't exist
+	if err != nil {
+		u.logger.Error("Error creating unit test directory:", err)
+		return err
 	}
-
 	// Create the test file
-	testFile, err := os.Create(utils.UnitTestDir + "/" + testfileName)
+	testFile, err := os.Create(fullPath)
 	if err != nil {
 		u.logger.Error("Error creating test file:", err)
 		return err

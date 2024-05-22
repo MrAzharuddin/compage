@@ -87,7 +87,7 @@ func (u *UnitTestCmd) unitTestCmdRun(cmd *cobra.Command, args []string) {
 				return nil
 			}
 
-			for k, v := range data {
+			for _, v := range data {
 				if len(v) > 0 {
 					codeBlock := strings.Join(v, "\n")
 					// Fetch the unit test from OpenAI
@@ -96,12 +96,21 @@ func (u *UnitTestCmd) unitTestCmdRun(cmd *cobra.Command, args []string) {
 						u.logger.Error("Error fetching unit test from OpenAI:", err)
 						return nil
 					}
-					err = u.processCodeBlock(k, res.Data.Code)
+					// process the file information properly
+					relativePath, err := filepath.Rel(cwd ,path)
+					if err != nil {
+						u.logger.Error("Error getting relative path:", err)
+						return nil
+					}
+					u.logger.Info(relativePath)
+					dirPath := filepath.Dir(relativePath)
+					u.logger.Info("Directory path:",dirPath)
+					err = u.processCodeBlock(relativePath, res.Data.Code)
 					if err != nil {
 						u.logger.Error("Error processing code block:", err)
 						return nil
 					}
-					u.logger.Info("Generated unit test for " + k)
+					u.logger.Info("Generated unit test for " + relativePath)
 				}
 			}
 		}
