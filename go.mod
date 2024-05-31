@@ -22,7 +22,6 @@ require (
 )
 
 require (
-	cloud.google.com/go/compute v1.23.3 // indirect
 	dario.cat/mergo v1.0.0 // indirect
 	github.com/Microsoft/go-winio v0.6.1 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20230923063757-afb1ddc0824c // indirect

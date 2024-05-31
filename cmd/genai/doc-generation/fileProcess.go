@@ -10,10 +10,6 @@ import (
 func (dg *DocGenerationCmd) fetchFoldersData(root string) ([]string, error) {
 	result := make([]string, 0)
 
-	excludedDirs = []string{
-		"Dockerfile",
-		"README.md",
-	}
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			dg.logger.Error("Error walking through directory:", err)
